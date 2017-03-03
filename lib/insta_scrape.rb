@@ -84,9 +84,11 @@ module InstaScrape
 
     posts.each do |post|
       if include_meta_data
-        visit(post[:link]) 
+        visit(post[:link])
         date = page.find('time')["datetime"]
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], date, text)
+        username = page.find('header div a')['href']
+        #info = InstaScrape::InstagramPost.new(post[:link], post[:image], date, text)
+        info = InstaScrape::InstagramPostWithUser.new(post[:link], post[:image], date, text, username)
       else
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], text)
       end
